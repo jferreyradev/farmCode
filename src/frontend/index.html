@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="es-AR">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+    <meta name="theme-color" content="#0a4d8c" />
+    <meta
+      name="description"
+      content="Lista de precios de medicamentos de venta al público - Resolución Conjunta 2/2025"
+    />
+    <title>Lista de Precios · Medicamentos</title>
+    <link
+      rel="icon"
+      href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>💊</text></svg>"
+    />
+
+    <!--
+      IMPORTANTE (producción):
+      Reemplazá el string vacío por la URL pública de tu backend en Render.
+      Ej: window.API_BASE_URL = "https://lista-precios-api.onrender.com";
+      Si el frontend se sirve desde el mismo dominio que la API, dejalo vacío.
+    -->
+    <script>
+      window.API_BASE_URL = "";
+    </script>
+
+    <!-- Tailwind CSS (CDN de desarrollo). Para producción compilá con tailwindcss CLI. -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+      tailwind.config = {
+        theme: {
+          extend: {
+            colors: {
+              brand: { DEFAULT: "#0a4d8c", dark: "#083a68", light: "#1e6ab5" },
+            },
+          },
+        },
+      };
+    </script>
+
+    <link rel="stylesheet" href="./styles.css" />
+  </head>
+  <body class="bg-slate-100 text-slate-900">
+    <div id="root"></div>
+
+    <script
+      crossorigin
+      src="https://unpkg.com/react@18.3.1/umd/react.production.min.js"
+    ></script>
+    <script
+      crossorigin
+      src="https://unpkg.com/react-dom@18.3.1/umd/react-dom.production.min.js"
+    ></script>
+    <script src="https://unpkg.com/@babel/standalone@7.25.6/babel.min.js"></script>
+    <script type="text/babel" src="./App.jsx"></script>
+  </body>
+</html>

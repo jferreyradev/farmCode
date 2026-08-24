@@ -1,0 +1,21 @@
+gtin,nombre_comercial,principio_activo,presentacion,laboratorio,es_venta_libre,precio,disponible
+7790012345673,Amoxidal 500,Amoxicilina,Cápsulas x 20,Richet,false,"2450,00",true
+7790023456788,Tafirol 500,Paracetamol,Comprimidos x 10,Genomma,true,"512,75",true
+7790034567893,Bayaspirina 500,Ácido acetilsalicílico,Comprimidos x 10,Bayer,true,"480,00",true
+7790045678908,Ibupirac 600,Ibuprofeno,Comprimidos x 50,Teva,true,"1890,90",true
+7790056789013,Rivotril 2 mg Gotas,Clonazepam,Solución oral x 20 ml,Roche,false,"3850,40",true
+7790067890128,Sertal Compuesto,Propifenazona / Diazepam,Comprimidos x 10,Roemmers,false,"2230,00",true
+7790078901233,Losartan Bagó 50 mg,Losartán potásico,Comprimidos x 30,Bagó,false,"3.150,00",true
+7790089012348,Metformina Gador 850,Metformina clorhidrato,Comprimidos x 30,Gador,false,"2870,50",true
+7790090123453,Enalapril Bagó 20 mg,Enalapril maleato,Comprimidos x 30,Bagó,false,"1980,00",true
+7790101234567,Eutirox 50,Levotiroxina sódica,Comprimidos x 50,Merck,false,"2650,25",true
+7790112345672,Omeprazol Northia 20,Omeprazol,Cápsulas x 14,Northia,true,"780,00",true
+7790123456787,Diclofenac Gel 1%,Diclofenaco dietilamonio,Pomo x 30 g,Casasco,true,"2350,00",true
+7790134567892,Cetirizina Raffo 10,Cetirizina dihidrocloruro,Comprimidos x 10,Raffo,true,"650,30",true
+7790145678907,Salbutamol Gador Aerosol,Salbutamol sulfato,Aerosol 100 mcg x 200 dosis,Gador,false,"4890,00",true
+7790156789012,Amoxidal Duo 875/125,Amoxicilina / Ác. clavulánico,Comprimidos x 14,Richet,false,"5620,00",true
+7790167890127,Naproxeno Sidus 550,Naproxeno sódico,Comprimidos x 20,Sidus,true,"1240,60",true
+7790178901232,Diazepam Bagó 10,Diazepam,Comprimidos x 20,Bagó,false,"2100,00",true
+7790189012347,Cefalexina Gador 500,Cefalexina,Cápsulas x 16,Gador,false,"3340,00",false
+7790190123452,Vitamina C 500 Efervescente,Ácido ascórbico,Comprimidos efervescentes x 10,Bagó,si,"890,00",true
+7790201234566,Paracetamol Jarabe Infantil,Paracetamol,Frasco 120 mg/5 ml x 120 ml,Northia,true,"1450.99",true

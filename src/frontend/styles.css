@@ -1,0 +1,61 @@
+/* Estilos personalizados sobre Tailwind CSS.
+   En producción con build propio, reemplazá el CDN por:
+     @tailwind base; @tailwind components; @tailwind utilities;
+   y compilá con tailwindcss CLI o PostCSS. */
+
+html {
+  -webkit-text-size-adjust: 100%;
+}
+
+body {
+  font-family:
+    system-ui,
+    -apple-system,
+    "Segoe UI",
+    Roboto,
+    "Helvetica Neue",
+    Arial,
+    sans-serif;
+}
+
+/* Áreas seguras en iPhone (notch / home indicator) */
+.safe-bottom {
+  padding-bottom: max(1rem, env(safe-area-inset-bottom));
+}
+.safe-top {
+  padding-top: env(safe-area-inset-top);
+}
+
+/* Animación de aparición de las tarjetas */
+@keyframes fade-in-up {
+  from {
+    opacity: 0;
+    transform: translateY(6px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+.card-enter {
+  animation: fade-in-up 0.18s ease-out both;
+}
+
+/* Scrollbar discreto */
+::-webkit-scrollbar {
+  width: 8px;
+}
+::-webkit-scrollbar-thumb {
+  background: #cbd5e1;
+  border-radius: 8px;
+}
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+/* Accesibilidad: foco visible */
+input:focus-visible,
+button:focus-visible {
+  outline: 2px solid #1e6ab5;
+  outline-offset: 2px;
+}

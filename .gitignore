@@ -1,0 +1,23 @@
+# Dependencias y compilado
+node_modules/
+dist/
+
+# Secretos - NUNCA commitear
+.env
+.env.local
+.env.*.local
+
+# Salidas locales
+carteleria/
+*.log
+
+# SO / editores / deploys
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/
+.vercel/
+.netlify/
+
+# Transcripts de sesiones de desarrollo
+session-*.md
