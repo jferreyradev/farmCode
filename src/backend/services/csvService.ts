@@ -151,6 +151,7 @@ export async function importCsvFromStream(
 
   // Propaga errores del stream de entrada al parser para abortar la iteración
   input.on('error', (err) => parser.destroy(err));
+  input.pipe(parser);
 
   let filasProcesadas = 0;
   let medicamentosUnicos = 0;

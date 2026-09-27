@@ -15,13 +15,12 @@
     />
 
     <!--
-      IMPORTANTE (producción):
-      Reemplazá el string vacío por la URL pública de tu backend en Render.
-      Ej: window.API_BASE_URL = "https://lista-precios-api.onrender.com";
-      Si el frontend se sirve desde el mismo dominio que la API, dejalo vacío.
+      IMPORTANTE (desarrollo local):
+      El frontend está sirviéndose en http://localhost:5500, la API corre en http://localhost:3000.
+      Si se despliega en otro dominio, cambiar por la URL pública del backend.
     -->
     <script>
-      window.API_BASE_URL = "";
+      window.API_BASE_URL = "http://localhost:3000";
     </script>
 
     <!-- Tailwind CSS (CDN de desarrollo). Para producción compilá con tailwindcss CLI. -->
