@@ -13,6 +13,9 @@ público mediante un **código QR** con la leyenda exacta
 | Base de datos | PostgreSQL + triggers de auditoría | Supabase |
 | Cartelería | PDFKit + QRCode (CLI Node) | Local |
 
+Manuales: [Usuario de sucursal](docs/MANUAL_USUARIO_SUCURSAL.md) ·
+[Puesta en marcha en la nube](docs/MANUAL_PUESTA_EN_MARCHA.md).
+
 ---
 
 ## 📁 Estructura del repositorio
@@ -41,7 +44,9 @@ público mediante un **código QR** con la leyenda exacta
 │   └── generate-poster.js       # CLI: genera PDF del cartel por sucursal
 ├── docs/
 │   ├── ARCHITECTURE.md          # Diagramas Mermaid y arquitectura de datos
-│   └── API.md                   # Documentación completa de endpoints
+│   ├── API.md                   # Documentación completa de endpoints
+│   ├── MANUAL_USUARIO_SUCURSAL.md # Carga de precios, consultas y cartelería
+│   └── MANUAL_PUESTA_EN_MARCHA.md # Despliegue en Supabase, Render y Vercel
 ├── .env.example
 ├── package.json
 ├── tsconfig.json
