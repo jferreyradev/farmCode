@@ -8,13 +8,18 @@ público mediante un **código QR** con la leyenda exacta
 
 | Componente | Stack | Hosting |
 |---|---|---|
-| Frontend SPA móvil | React 18 + Tailwind CSS | Vercel / Netlify |
+| Frontend móvil | React 18 + Tailwind CSS | Vercel |
 | API | Fastify 5 + TypeScript | Render |
 | Base de datos | PostgreSQL + triggers de auditoría | Supabase |
-| Cartelería | PDFKit + QRCode (CLI Node) | Local |
+| Cartelería | PDFKit + QRCode | API en Render o CLI local |
 
-Manuales: [Usuario de sucursal](docs/MANUAL_USUARIO_SUCURSAL.md) ·
-[Puesta en marcha en la nube](docs/MANUAL_PUESTA_EN_MARCHA.md).
+## Documentación principal
+
+- [Manual de usuario de sucursal](docs/MANUAL_USUARIO_SUCURSAL.md): carga y actualización de precios, consulta pública y cartelería QR.
+- [Manual de puesta en marcha en la nube](docs/MANUAL_PUESTA_EN_MARCHA.md): configuración de Supabase, Render y Vercel.
+- [Arquitectura del sistema](docs/ARCHITECTURE.md): componentes, persistencia y diagramas Mermaid.
+- [Referencia de la API](docs/API.md): endpoints, formato CSV, respuestas y errores.
+- [CSV de prueba](examples/precios-carga-prueba.csv): datos ficticios para importar en una sucursal aislada.
 
 ---
 
@@ -143,7 +148,7 @@ npx serve src/frontend -l 5500
 
 ## 6. Panel de importación (sin curl)
 
-Abrí `/admin.html` desde tu despliegue de Vercel/Netlify. Permite:
+Abrí `/admin` desde tu despliegue de Vercel. Permite:
 
 1. Definir la sucursal destino (se recuerda en `localStorage`).
 2. Arrastrar o seleccionar el `.csv`.
@@ -189,7 +194,7 @@ Abrí `/admin.html` desde tu despliegue de Vercel/Netlify. Permite:
 2. En [render.com](https://render.com): **New → Web Service → conectá el repo**.
 3. Configuración:
    - **Runtime:** Node
-   - **Build Command:** `npm install && npm run build`
+   - **Build Command:** `npm ci --include=dev && npm run build`
    - **Start Command:** `npm start`
    - **Health Check Path:** `/health`
 4. Variables de entorno (Environment):
@@ -199,10 +204,10 @@ Abrí `/admin.html` desde tu despliegue de Vercel/Netlify. Permite:
    | `PORT` | `10000` (Render lo inyecta automáticamente; podés omitirla) |
    | `NODE_ENV` | `production` |
    | `DATABASE_SSL` | `true` |
-   | `ALLOWED_ORIGINS` | `https://tu-frontend.vercel.app` |
-   | `PUBLIC_APP_URL` | `https://tu-farmacia.vercel.app` |
+   | `ALLOWED_ORIGINS` | Dominio exacto de Vercel, por ejemplo `https://tu-farmacia.vercel.app` |
+   | `PUBLIC_APP_URL` | URL pública del frontend en Vercel |
    | `ADMIN_API_KEY` | **Clave aleatoria larga (obligatoria en producción).** Protege el endpoint de carga. Generala con: `node -e "console.log(require('crypto').randomBytes(32).toString('hex'))"` |
-5. Deploy. Anotá la URL, ej. `https://lista-precios-api.onrender.com`.
+5. Deploy. La API de este proyecto está publicada en `https://farmcodeservice.onrender.com`.
 
 > 🔐 Con `ADMIN_API_KEY` definida, todo `POST .../precios/csv` exige el header
 > `x-api-key: <clave>` (o `Authorization: Bearer <clave>`, comparación en
@@ -213,20 +218,23 @@ Abrí `/admin.html` desde tu despliegue de Vercel/Netlify. Permite:
 > El plan gratuito de Render "duerme" tras 15 min de inactividad; para una
 > consulta pública 24/7 se recomienda el plan Starter.
 
-## 3. Vercel / Netlify (Frontend)
+## 3. Vercel (Frontend)
 
-### Vercel
 1. **New Project → importá el repo** (framework: *Other*).
 2. `vercel.json` ya configura el output como sitio estático desde `src/frontend`.
-3. Antes de desplegar, editá `src/frontend/index.html`:
-   ```js
-   window.API_BASE_URL = "https://lista-precios-api.onrender.com";
-   ```
-4. Deploy → URL pública final, ej. `https://tu-farmacia.vercel.app`.
+3. Confirmá que ambos archivos apunten a la API desplegada en Render:
 
-### Netlify (alternativa)
-- Build command: *(ninguno)* · Publish directory: `src/frontend`
-- Mismo cambio de `window.API_BASE_URL`.
+   - `src/frontend/index.html`
+   - `src/frontend/admin.html`
+
+   ```js
+   window.API_BASE_URL = "https://farmcodeservice.onrender.com";
+   ```
+4. Deploy y anotá el dominio público, por ejemplo `https://tu-farmacia.vercel.app`.
+5. En Render, configurá `ALLOWED_ORIGINS` y `PUBLIC_APP_URL` con ese dominio.
+
+No configures `DATABASE_URL` ni `ADMIN_API_KEY` en Vercel. El frontend es
+estático; `window.API_BASE_URL` se define en los archivos HTML.
 
 ## 4. Generar y colocar la cartelería obligatoria
 
@@ -239,7 +247,7 @@ vidriera/mostrador. La leyenda impresa es exactamente:
 **"CONSULTE AQUÍ LISTA DE PRECIOS DE MEDICAMENTOS"**.
 
 También podés descargarlo desde la API ya desplegada:
-`GET /api/sucursales/SUC-001/cartel.pdf`
+`https://farmcodeservice.onrender.com/api/sucursales/SUC-001/cartel.pdf`
 
 ---
 
@@ -270,7 +278,7 @@ gtin,nombre_comercial,principio_activo,presentacion,laboratorio,es_venta_libre,p
 ```bash
 curl -X POST "http://localhost:3000/api/sucursales/SUC-001/precios/csv" \
   -H "x-api-key: $ADMIN_API_KEY" \
-  -F "file=@examples/precios-demo.csv"
+   -F "file=@examples/precios-demo.csv"
 ```
 
 **Subir el CSV** (body crudo, ideal para cron):
@@ -279,7 +287,7 @@ curl -X POST "http://localhost:3000/api/sucursales/SUC-001/precios/csv" \
 curl -X POST "http://localhost:3000/api/sucursales/SUC-001/precios/csv" \
   -H "Content-Type: text/csv" \
   -H "x-api-key: $ADMIN_API_KEY" \
-  --data-binary @examples/precios-demo.csv
+   --data-binary @examples/precios-demo.csv
 ```
 
 > Si en `.env` no definiste `ADMIN_API_KEY` (solo desarrollo), omití el header.
@@ -324,7 +332,7 @@ Agregá (ajustá rutas):
   -H "Content-Type: text/csv" \
   -H "x-api-key: TU_ADMIN_API_KEY" \
   --data-binary @/opt/farmacia/export/precios.csv \
-  "https://lista-precios-api.onrender.com/api/sucursales/SUC-001/precios/csv" \
+  "https://farmcodeservice.onrender.com/api/sucursales/SUC-001/precios/csv" \
   >> /var/log/sync-precios.log 2>&1
 ```
 
@@ -336,7 +344,7 @@ Opción CLI (PowerShell como administrador):
 
 ```powershell
 schtasks /Create /SC DAILY /ST 06:00 /TN "Sync Precios Res 2-2025" ^
-  /TR "powershell -NoProfile -WindowStyle Hidden -Command \"Invoke-RestMethod -Method Post -Uri 'https://lista-precios-api.onrender.com/api/sucursales/SUC-001/precios/csv' -ContentType 'text/csv' -Headers @{ 'x-api-key' = 'TU_ADMIN_API_KEY' } -InFile 'C:\farmacia\export\precios.csv'\""
+  /TR "powershell -NoProfile -WindowStyle Hidden -Command \"Invoke-RestMethod -Method Post -Uri 'https://farmcodeservice.onrender.com/api/sucursales/SUC-001/precios/csv' -ContentType 'text/csv' -Headers @{ 'x-api-key' = 'TU_ADMIN_API_KEY' } -InFile 'C:\farmacia\export\precios.csv'\""
 ```
 
 Opción gráfica:
