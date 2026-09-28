@@ -1,0 +1,5 @@
+gtin,nombre_comercial,principio_activo,presentacion,laboratorio,es_venta_libre,precio,disponible
+TEST-GTIN-0001,Producto Demo Analgesico,Ingrediente demo A,Comprimidos x 10,Lab Demo,false,1250.00,true
+TEST-GTIN-0002,Producto Demo Jarabe,Ingrediente demo B,Frasco x 100 ml,Lab Demo,true,980.50,true
+TEST-GTIN-0003,Producto Demo Crema,Ingrediente demo C,Pomo x 30 g,Lab Demo,true,1475.25,true
+TEST-GTIN-0004,Producto Demo No Disponible,Ingrediente demo D,Envase x 20,Lab Demo,false,2100.00,false
