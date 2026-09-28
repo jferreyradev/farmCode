@@ -94,7 +94,10 @@ export async function registerPricesRoutes(app: FastifyInstance): Promise<void> 
     );
 
     const total = preciosRes.rows[0]?.total_registros ?? 0;
-    const items = preciosRes.rows.map(({ total_registros: _t, ...resto }) => resto);
+    const items = preciosRes.rows.map((fila: FilaPrecio) => {
+      const { total_registros: _t, ...resto } = fila;
+      return resto;
+    });
 
     return reply.send({
       ok: true,
